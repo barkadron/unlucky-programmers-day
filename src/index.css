@@ -1,0 +1,98 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    padding-bottom: 1.5em;
+    padding-top: 1.5em;
+}
+
+header .title {
+    margin: auto;
+    width: fit-content;
+}
+
+header .title a {
+    color: rgb(27, 27, 27);
+    font-family: "League Spartan", arial, helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: normal;
+    overflow-wrap: break-word;
+    text-align: center;
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-size-adjust: 100%;
+    text-transform: none;
+    word-break: break-word;
+}
+
+main {
+    flex: 1 0 auto;
+    background-color: rgb(246, 246, 246);
+    padding: 0 2em;
+    text-align: center;
+}
+
+main div {
+    margin-bottom: 2em;
+    margin-top: 2em;
+}
+
+.countdown-col {
+    display: inline-block;
+}
+
+.countdown-col-element {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+}
+
+.countdown-col-element-number {
+    font-size: 50px;
+}
+
+.countdown-col-element-text {
+    text-align: center;
+}
+
+footer {
+    flex: 0 0 auto;
+}
+
+footer .copyright {
+    box-sizing: border-box;
+    color: rgb(94, 94, 94);
+    font-family: Helvetica, arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin: auto;
+    letter-spacing: normal;
+    line-height: 20px;
+    outline-color: rgb(94, 94, 94);
+    outline-style: none;
+    outline-width: 0px;
+    overflow-wrap: break-word;
+    padding-bottom: 1em;
+    padding-top: 1em;
+    text-align: center;
+    text-size-adjust: 100%;
+    text-transform: none;
+    user-select: text;
+    width: fit-content;
+}
+
+.copyright p {
+    display: inline-block;
+}

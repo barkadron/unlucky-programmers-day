@@ -1,49 +1,127 @@
 (function () {
+    const SECOND = 1000;
+    const MINUTE = SECOND * 60;
+    const HOUR = MINUTE * 60;
+    const DAY = HOUR * 24;
 
-    /*
-        https://en.wikipedia.org/wiki/Friday_the_13th
-        https://en.wikipedia.org/wiki/Day_of_the_Programmer
-    */
+    window.addEventListener('load', calculate);
 
-    window.findYearsWithUnluckyProgrammerDay = findYearsWithUnluckyProgrammerDay;
+    function calculate() {
+        const MIN_YEAR = 1900;
+        const MAX_YEAR = 2100;
 
-    function findYearsWithUnluckyProgrammerDay (fromYear, toYear) {
+        const currentDate = new Date();
+
+        let statusMessage = '';
+        let countdownDate = null;
+
+        const yearsPast = findYearsWithUnluckyProgrammersDay(MIN_YEAR, currentDate.getFullYear() - 1);
+        const yearsFuture = findYearsWithUnluckyProgrammersDay(currentDate.getFullYear() + 1, MAX_YEAR);
+
+        if (isUnluckyProgrammersDay(currentDate)) {
+            // today!
+            yearsPast.push(currentDate.getFullYear());
+            document.getElementById('current-status').innerText = 'Hooray! Today is the same day!';
+        } else {
+            let checkDate = getSeptemberThirteenDate(currentDate.getFullYear());
+            if (isUnluckyProgrammersDay(checkDate)) {
+                // this year
+                if (checkDate > currentDate) {
+                    // will be this year
+                    yearsFuture.unshift(currentDate.getFullYear());
+                    statusMessage = 'This year will be this very day!';
+                } else {
+                    // already been this year
+                    yearsPast.push(currentDate.getFullYear());
+                    statusMessage = 'This year already was this very day!';
+                }
+                countdownDate = checkDate;
+            } else {
+                // not this year
+                countdownDate = getSeptemberThirteenDate(yearsFuture[0]);
+            }
+        }
+
+        if (countdownDate) {
+            startCountdown(countdownDate);
+        }
+
+        document.getElementById('current-status').innerText = statusMessage;
+        document.getElementById('years-past').innerText = yearsPast.join(', ');
+        document.getElementById('years-future').innerText = yearsFuture.join(', ');
+    }
+
+    function startCountdown(toDate) {
+        const daysElem = document.getElementById('days');
+        const hoursElem = document.getElementById('hours');
+        const minutesElem = document.getElementById('minutes');
+        const secondsElem = document.getElementById('seconds');
+
+        const currentDate = new Date();
+        let timeRemaining = toDate - currentDate;
+        const int = setInterval(step, SECOND);
+        step();
+
+        function step() {
+            if (timeRemaining >= SECOND) {
+                timeRemaining -= SECOND;
+
+                const days = Math.floor(timeRemaining / DAY);
+                const hours = Math.floor((timeRemaining % DAY) / HOUR);
+                const minutes = Math.floor((timeRemaining % HOUR) / MINUTE);
+                const seconds = Math.floor((timeRemaining % MINUTE) / SECOND);
+
+                daysElem.innerText = days;
+                hoursElem.innerText = doubleDigit(hours);
+                minutesElem.innerText = doubleDigit(minutes);
+                secondsElem.innerText = doubleDigit(seconds);
+            } else {
+                clearInterval(int);
+                setTimeout(calculate, SECOND);
+            }
+        }
+    }
+
+    function findYearsWithUnluckyProgrammersDay (fromYear, toYear) {
         const years = [];
         for (let year = fromYear; year <= toYear; year++) {
-            const date = new Date(year, 8, 13) // September 13
-            if (isUnluckyDay(date)) {
-                if (isProgrammerDay(date)) {
-                    years.push(year);
-                }
+            const date = getSeptemberThirteenDate(year);
+            if (isUnluckyProgrammersDay(date)) {
+                years.push(year);
             }
         }
         return years;
+    }
+
+    function getSeptemberThirteenDate(year) {
+        return new Date(year, 8, 13); // September 13
+    }
+
+    function doubleDigit(num) {
+        return num.toString().padStart(2, 0);
     }
 
     function isUnluckyDay(date) {
         return date.getDay() === 5 && date.getDate() === 13; // Friday the 13th.
     }
 
-    function isProgrammerDay(date) {
-        const dayNumber = getDayOfTheYear(date);
-        return dayNumber === 256; // 256 day in the Year
+    function isProgrammersDay(date) {
+        return getDayOfTheYear(date) === 256; // 256 day in the Year
+    }
+
+    function isUnluckyProgrammersDay(date) {
+        return isUnluckyDay(date) && isProgrammersDay(date);
     }
 
     function getDayOfTheYear(date) {
-        const oneDay = 1000 * 60 * 60 * 24;
         const start = new Date(date.getFullYear(), 0 , 0);
 
         // To take timezones and daylight savings into account (https://stackoverflow.com/a/8619946)
         const timezoneOffsetsDiff = start.getTimezoneOffset() - date.getTimezoneOffset();
 
-        const daysDiff = (date-start) + (timezoneOffsetsDiff * 60 * 1000);
-        const dayNumber = Math.floor(daysDiff / oneDay);
+        const daysDiff = (date-start) + (timezoneOffsetsDiff * MINUTE);
+        const dayNumber = Math.floor(daysDiff / DAY);
         return dayNumber;
     }
 
 }());
-
-/*
-    > window.findYearsWithUnluckyProgrammerDay(2000, 2100);
-    < (11) [2002, 2013, 2019, 2030, 2041, 2047, 2058, 2069, 2075, 2086, 2097]
-*/
