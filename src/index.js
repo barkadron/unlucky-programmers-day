@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     const SECOND = 1000;
     const MINUTE = SECOND * 60;
     const HOUR = MINUTE * 60;
@@ -29,7 +29,7 @@
                 if (checkDate > currentDate) {
                     // will be this year
                     yearsFuture.unshift(currentDate.getFullYear());
-                    statusMessage = 'This year will be this very day!';
+                    statusMessage = 'The closest one will come this year!';
                 } else {
                     // already been this year
                     yearsPast.push(currentDate.getFullYear());
@@ -66,15 +66,17 @@
             if (timeRemaining >= SECOND) {
                 timeRemaining -= SECOND;
 
-                const days = Math.floor(timeRemaining / DAY);
-                const hours = Math.floor((timeRemaining % DAY) / HOUR);
-                const minutes = Math.floor((timeRemaining % HOUR) / MINUTE);
-                const seconds = Math.floor((timeRemaining % MINUTE) / SECOND);
+                const days = Math.floor(timeRemaining / DAY).toString();
+                setInnerText(daysElem, days);
 
-                daysElem.innerText = days;
-                hoursElem.innerText = doubleDigit(hours);
-                minutesElem.innerText = doubleDigit(minutes);
-                secondsElem.innerText = doubleDigit(seconds);
+                const hours = doubleDigit(Math.floor((timeRemaining % DAY) / HOUR));
+                setInnerText(hoursElem, hours);
+
+                const minutes = doubleDigit(Math.floor((timeRemaining % HOUR) / MINUTE));
+                setInnerText(minutesElem, minutes);
+
+                const seconds = doubleDigit(Math.floor((timeRemaining % MINUTE) / SECOND));
+                setInnerText(secondsElem, seconds);
             } else {
                 clearInterval(int);
                 setTimeout(calculate, SECOND);
@@ -100,6 +102,12 @@
     function doubleDigit(num) {
         return num.toString().padStart(2, 0);
     }
+
+    function setInnerText(elem, text) {
+        if (elem.innerText !== text) {
+            elem.innerText = text;
+        }
+    };
 
     function isUnluckyDay(date) {
         return date.getDay() === 5 && date.getDate() === 13; // Friday the 13th.

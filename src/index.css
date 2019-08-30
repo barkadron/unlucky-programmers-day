@@ -1,4 +1,4 @@
-* {
+﻿* {
 	margin: 0;
 	padding: 0;
 }
@@ -25,7 +25,7 @@ header .title {
 header .title a {
     color: rgb(27, 27, 27);
     font-family: "League Spartan", arial, helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     letter-spacing: normal;
     overflow-wrap: break-word;
@@ -39,8 +39,8 @@ header .title a {
 
 main {
     flex: 1 0 auto;
+    color: rgb(27, 27, 27);
     background-color: rgb(246, 246, 246);
-    padding: 0 2em;
     text-align: center;
 }
 
@@ -49,18 +49,44 @@ main div {
     margin-top: 2em;
 }
 
+
+main .description p {
+    margin-top: 0.5em;
+}
+
+main .description a {
+    text-decoration-line: none;
+}
+
+main .description a:hover {
+    text-decoration-line: underline;
+}
+
+main .current-status {
+    margin-bottom: 2em;
+    margin-top: 2em;
+    font-size: 2em;
+}
+
+main .countdown {
+    margin-bottom: 5em;
+    margin-top: 5em;
+}
+
 .countdown-col {
     display: inline-block;
 }
 
 .countdown-col-element {
+    padding-top: 0.7em;
     display: flex;
     flex-direction: column;
-    margin: 0 20px;
+    margin: 0 1.6em;
 }
 
 .countdown-col-element-number {
-    font-size: 50px;
+    font-family: Helvetica, arial, sans-serif;
+    font-size: 6em;
 }
 
 .countdown-col-element-text {
@@ -69,15 +95,11 @@ main div {
 
 footer {
     flex: 0 0 auto;
-}
-
-footer .copyright {
     box-sizing: border-box;
     color: rgb(94, 94, 94);
     font-family: Helvetica, arial, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    margin: auto;
+    font-size: 12px;
+    font-weight: 200;
     letter-spacing: normal;
     line-height: 20px;
     outline-color: rgb(94, 94, 94);
@@ -90,9 +112,22 @@ footer .copyright {
     text-size-adjust: 100%;
     text-transform: none;
     user-select: text;
+}
+
+footer .copyright {
+    margin: auto;
     width: fit-content;
 }
 
 .copyright p {
     display: inline-block;
+    margin: 0 0.3em;
+}
+
+.copyright a {
+    text-decoration-line: none;
+}
+
+.copyright a:hover {
+    text-decoration-line: underline;
 }
