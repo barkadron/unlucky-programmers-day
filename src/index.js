@@ -21,7 +21,7 @@
         if (isUnluckyProgrammersDay(currentDate)) {
             // today!
             yearsPast.push(currentDate.getFullYear());
-            document.getElementById('current-status').innerText = 'Hooray! Today is the same day!';
+            statusMessage = `Hooray! Today is the Unlucky Programmer's Day!`;
         } else {
             let checkDate = getSeptemberThirteenDate(currentDate.getFullYear());
             if (isUnluckyProgrammersDay(checkDate)) {
@@ -33,7 +33,7 @@
                 } else {
                     // already been this year
                     yearsPast.push(currentDate.getFullYear());
-                    statusMessage = 'This year already was this very day!';
+                    statusMessage = 'This day has already been in this year';
                 }
                 countdownDate = checkDate;
             } else {
