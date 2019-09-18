@@ -34,6 +34,7 @@
                     // already been this year
                     yearsPast.push(currentDate.getFullYear());
                     statusMessage = 'This day has already been in this year';
+                    checkDate = getSeptemberThirteenDate(yearsFuture[0]);
                 }
                 countdownDate = checkDate;
             } else {
